@@ -9,6 +9,7 @@
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
+    "framer-motion": "latest",
     "next": "latest",
     "react": "latest",
     "react-dom": "latest",
