@@ -1,0 +1,38 @@
+{
+  "name": "api",
+  "version": "1.0.0",
+  "scripts": {
+    "start:dev": "nest start --watch",
+    "build": "nest build",
+    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "typeorm": "typeorm-ts-node-commonjs",
+    "test": "jest",
+    "test:watch": "jest --watch"
+  },
+  "dependencies": {
+    "@nestjs/common": "latest",
+    "@nestjs/core": "latest",
+    "@nestjs/config": "latest",
+    "@nestjs/jwt": "latest",
+    "@nestjs/passport": "latest",
+    "@nestjs/typeorm": "latest",
+    "@coaching-ops/types": "workspace:*",
+    "@coaching-ops/validation": "workspace:*",
+    "typeorm": "^0.3.x",
+    "pg": "^8.x.x",
+    "passport": "latest",
+    "passport-jwt": "latest",
+    "bcrypt": "^5.1.1",
+    "zod": "latest",
+    "reflect-metadata": "latest",
+    "rxjs": "latest"
+  },
+  "devDependencies": {
+    "@types/node": "latest",
+    "@types/bcrypt": "^5.0.2",
+    "@types/passport-jwt": "latest",
+    "jest": "latest",
+    "ts-jest": "latest",
+    "supertest": "latest"
+  }
+}

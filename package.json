@@ -1,0 +1,35 @@
+{
+  "name": "coaching-ops-platform",
+  "version": "1.0.0",
+  "private": true,
+  "description": "IIT Coaching Operations Platform Monorepo",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "turbo run dev",
+    "build": "turbo run build",
+    "lint": "turbo run lint",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "test:api": "pnpm run test --prefix apps/api",
+    "test:api:watch": "pnpm run test:watch --prefix apps/api",
+    "test:api:e2e": "pnpm run test:e2e --prefix apps/api",
+    "start:api": "pnpm run start:dev --prefix apps/api",
+    "docker:up": "docker-compose up -d",
+    "docker:down": "docker-compose down",
+    "clean": "pnpm run clean:modules && pnpm run clean:dist",
+    "clean:modules": "rimraf **/node_modules",
+    "clean:dist": "rimraf apps/*/dist packages/*/dist"
+  },
+  "devDependencies": {
+    "turbo": "latest",
+    "prettier": "^3.0.0",
+    "rimraf": "^5.0.0",
+    "typescript": "^5.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
+  }
+}
