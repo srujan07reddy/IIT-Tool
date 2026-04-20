@@ -17,7 +17,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       ignoreExpiration: false,
       // Use the secret defined in your apps/api/src/config/auth.config.ts
-      secretOrKey: configService.get<string>('auth.secret'),
+      secretOrKey: configService.get<string>('auth.secret') as string,
     });
   }
 

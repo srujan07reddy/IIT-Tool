@@ -18,8 +18,26 @@ export interface User extends BaseEntity {
   lastLoginAt?: string | Date;
 }
 
+export type Permission = string;
+
 export interface JWTPayload {
   sub: string;
   email: string;
   role: UserRole;
+}
+
+export interface LoginDto {
+  email: string;
+  password: string;
+}
+
+export interface LoginResponse {
+  accessToken: string;
+  user: {
+    id: string;
+    email: string;
+    firstName: string;
+    lastName: string;
+    role: UserRole;
+  };
 }

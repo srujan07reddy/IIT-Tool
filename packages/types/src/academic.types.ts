@@ -26,11 +26,8 @@ export interface Topic extends BaseEntity {
   estimatedHours: number;
 }
 
-export interface TopicStatus extends BaseEntity {
-  batchId: string;
-  topicId: string;
-  status: 'PENDING' | 'IN_PROGRESS' | 'COMPLETED';
-  facultyId: string;
-  completedAt?: string | Date;
-  remarks?: string;
+export enum TopicStatus {
+  PENDING = 'PENDING',
+  IN_PROGRESS = 'IN_PROGRESS',
+  COMPLETED = 'COMPLETED',
 }

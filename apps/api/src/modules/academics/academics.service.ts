@@ -2,8 +2,8 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { SubjectEntity } from './entities/subject.entity';
-import { ChapterEntity } from './chapter.entity';
-import { TopicEntity } from './topic.entity';
+import { ChapterEntity } from './entities/chapter.entity';
+import { TopicEntity } from './entities/topic.entity';
 import { TopicStatus } from '@coaching-ops/types';
 
 /**

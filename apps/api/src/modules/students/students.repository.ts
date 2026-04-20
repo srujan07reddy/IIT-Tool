@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { DataSource, Repository } from 'typeorm';
 import { StudentEntity } from './entities/student.entity';
+import { StudentStatus } from '@coaching-ops/types';
 
 /**
  * StudentsRepository
@@ -42,9 +43,9 @@ export class StudentsRepository extends Repository<StudentEntity> {
    */
   async getActiveStudentsByBatch(batchId: string): Promise<StudentEntity[]> {
     return this.find({
-      where: { 
+      where: {
         currentBatchId: batchId,
-        isActive: true 
+        status: StudentStatus.ACTIVE,
       },
     });
   }

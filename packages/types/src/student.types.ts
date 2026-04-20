@@ -23,17 +23,40 @@ export interface AcademicProfile {
   targetExam: string; // e.g., 'JEE', 'NEET'
 }
 
+export enum Gender {
+  MALE = 'MALE',
+  FEMALE = 'FEMALE',
+  OTHER = 'OTHER',
+}
+
+export enum StudentStatus {
+  PROSPECT = 'PROSPECT',
+  ACTIVE = 'ACTIVE',
+  INACTIVE = 'INACTIVE',
+  ALUMNI = 'ALUMNI',
+  DROPPED = 'DROPPED',
+}
+
 export interface StudentMaster extends BaseEntity {
-  registrationNumber: string;
+  rollNumber: string;
   firstName: string;
   lastName: string;
   dateOfBirth: string | Date;
-  gender: 'MALE' | 'FEMALE' | 'OTHER';
-  phoneNumber: string; 
+  gender: Gender;
+  phone?: string; 
   email: string;
-  address: string;
-  parentInfo: ParentInfo;
-  academicProfile: AcademicProfile;
-  batchId?: string;
-  status: 'ACTIVE' | 'INACTIVE' | 'ALUMNI' | 'DROPPED';
+  currentBatchId: string;
+  enrollmentDate?: Date;
+  status: StudentStatus;
+  parentDetails: ParentInfo;
+  metadata?: Record<string, any>;
 }
+
+export type CreateStudentDto = Omit<
+  StudentMaster,
+  'id' | 'createdAt' | 'updatedAt' | 'deletedAt'
+> & {
+  status?: StudentStatus;
+};
+
+export type UpdateStudentDto = Partial<CreateStudentDto>;

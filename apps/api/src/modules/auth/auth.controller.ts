@@ -1,4 +1,4 @@
-import { Controller, Post, Body, UseGuards, Req, HttpCode, HttpStatus } from '@nestjs/common';
+import { Controller, Post, Body, UseGuards, Req, HttpCode, HttpStatus, UnauthorizedException } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { UsersService } from '../users/users.service';
 import { LoginDto, LoginResponse } from '@coaching-ops/types';
@@ -26,6 +26,10 @@ export class AuthController {
   async login(@Body() loginDto: LoginDto): Promise<LoginResponse> {
     // 1. Find the user by email
     const user = await this.usersService.findByEmail(loginDto.email);
+    
+    if (!user) {
+      throw new UnauthorizedException('Invalid credentials');
+    }
     
     // 2. Validate credentials via AuthService
     await this.authService.validateUser(loginDto, user);
