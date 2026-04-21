@@ -9,11 +9,13 @@
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
+    "@coaching-ops/types": "file:../../packages/types",
+    "@coaching-ops/ui": "file:../../packages/ui",
+    "@coaching-ops/validation": "file:../../packages/validation",
+    "axios": "^1.15.1",
     "framer-motion": "latest",
     "next": "latest",
     "react": "latest",
-    "react-dom": "latest",
-    "@coaching-ops/types": "file:../../packages/types",
-    "@coaching-ops/validation": "file:../../packages/validation"
+    "react-dom": "latest"
   }
 }

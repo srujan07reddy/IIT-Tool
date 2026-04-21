@@ -12,30 +12,31 @@
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
-    "@nestjs/common": "latest",
-    "@nestjs/core": "latest",
-    "@nestjs/config": "latest",
-    "@nestjs/jwt": "latest",
-    "@nestjs/passport": "latest",
-    "@nestjs/typeorm": "latest",
     "@coaching-ops/types": "file:../../packages/types",
     "@coaching-ops/validation": "file:../../packages/validation",
-    "typeorm": "^0.3.x",
-    "pg": "^8.x.x",
+    "@nestjs/common": "latest",
+    "@nestjs/config": "latest",
+    "@nestjs/core": "latest",
+    "@nestjs/jwt": "latest",
+    "@nestjs/passport": "latest",
+    "@nestjs/platform-express": "^11.1.19",
+    "@nestjs/typeorm": "latest",
+    "bcrypt": "^5.1.1",
     "passport": "latest",
     "passport-jwt": "latest",
-    "bcrypt": "^5.1.1",
-    "zod": "latest",
+    "pg": "^8.x.x",
     "reflect-metadata": "latest",
-    "rxjs": "latest"
+    "rxjs": "latest",
+    "typeorm": "^0.3.x",
+    "zod": "latest"
   },
   "devDependencies": {
     "@nestjs/cli": "latest",
-    "@types/node": "latest",
     "@types/bcrypt": "^5.0.2",
+    "@types/node": "latest",
     "@types/passport-jwt": "latest",
     "jest": "latest",
-    "ts-jest": "latest",
-    "supertest": "latest"
+    "supertest": "latest",
+    "ts-jest": "latest"
   }
 }

@@ -8,7 +8,13 @@
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "strictPropertyInitialization": false,
-    "useDefineForClassFields": false
+    "useDefineForClassFields": false,
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "moduleResolution": "node",
+    "target": "es2022"
   },
   "include": ["src"],
   "exclude": ["node_modules", "dist", "**/*.spec.ts", "**/*.e2e-spec.ts"]
