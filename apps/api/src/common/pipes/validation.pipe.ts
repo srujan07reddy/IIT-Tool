@@ -4,7 +4,7 @@ import {
   BadRequestException,
   Injectable,
 } from '@nestjs/common';
-import { ZodSchema } from 'zod';
+import { ZodSchema, ZodError } from 'zod';
 
 /**
  * GlobalValidationPipe
@@ -13,9 +13,9 @@ import { ZodSchema } from 'zod';
  */
 @Injectable()
 export class GlobalValidationPipe implements PipeTransform {
-  constructor(private schema: ZodSchema<any>) {}
+  constructor(private schema: ZodSchema<unknown>) {}
 
-  transform(value: unknown, metadata: ArgumentMetadata) {
+  transform(value: unknown, _metadata: ArgumentMetadata) {
     try {
       // Validates the incoming data (value) against the injected Zod schema
       const parsedValue = this.schema.parse(value);
@@ -25,7 +25,7 @@ export class GlobalValidationPipe implements PipeTransform {
       // providing the exact field that failed. [cite: 881, 1059]
       throw new BadRequestException({
         message: 'Validation failed',
-        errors: (error as any).errors,
+        errors: error instanceof ZodError ? error.errors : error,
       });
     }
   }

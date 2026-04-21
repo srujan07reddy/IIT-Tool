@@ -1,9 +1,9 @@
-'use client';
+cid'use client';
 
 import { useState } from 'react';
 import { api } from '@/lib/api';
 import { updateOwnPasswordSchema } from '@coaching-ops/validation';
-import { Button, Card, Input, Label, Text } from '@coaching-ops/ui';
+import { Button, Card, Input, Text } from '@coaching-ops/ui';
 import { Loader2 } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';

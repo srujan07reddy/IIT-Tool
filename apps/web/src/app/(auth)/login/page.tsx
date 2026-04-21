@@ -22,7 +22,7 @@ export default function LoginPage() {
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm<LoginInput>({
-    resolver: zodResolver(LoginSchema as never),
+    resolver: zodResolver(LoginSchema),
     defaultValues: {
       email: 'admin@coachingops.dev',
       password: 'Password123',

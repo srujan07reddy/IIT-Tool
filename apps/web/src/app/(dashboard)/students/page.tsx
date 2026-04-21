@@ -64,7 +64,7 @@ export default function StudentsPage() {
     reset,
     formState: { errors, isSubmitting },
   } = useForm<CreateStudentInput>({
-    resolver: zodResolver(StudentRegistrationSchema as never),
+    resolver: zodResolver(StudentRegistrationSchema),
     defaultValues: initialValues,
   });
 

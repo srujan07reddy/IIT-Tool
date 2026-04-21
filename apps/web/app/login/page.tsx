@@ -7,7 +7,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { api } from '@/lib/api';
 import { loginSchema, type LoginInput } from '@coaching-ops/validation';
 import { useAuthStore } from '@/store/useAuthStore';
-import { Button, Card, Input, Label, Text } from '@coaching-ops/ui';
+import { Button, Card, Input, Text } from '@coaching-ops/ui';
 import { Loader2 } from 'lucide-react';
 
 export default function LoginPage() {
@@ -45,14 +45,14 @@ export default function LoginPage() {
           </div>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
             <div>
-              <Label htmlFor="email">Email</Label>
+              <label htmlFor="email" className="block mb-1 text-sm font-medium">Email</label>
               <Input id="email" {...form.register('email')} />
               {form.formState.errors.email && (
                 <Text className="mt-1 text-sm text-destructive">{form.formState.errors.email.message}</Text>
               )}
             </div>
             <div>
-              <Label htmlFor="password">Password</Label>
+              <label htmlFor="password" className="block mb-1 text-sm font-medium">Password</label>
               <Input id="password" type="password" {...form.register('password')} />
               {form.formState.errors.password && (
                 <Text className="mt-1 text-sm text-destructive">{form.formState.errors.password.message}</Text>
