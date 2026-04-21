@@ -1,4 +1,4 @@
-import { Injectable, UnauthorizedException, Inject } from '@nestjs/common';
+import { Injectable, UnauthorizedException, Inject, forwardRef } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigType } from '@nestjs/config';
 import * as bcrypt from 'bcrypt';
@@ -45,7 +45,7 @@ export class AuthService {
     const payload: JWTPayload = { 
       sub: user.id, 
       email: user.email, 
-      role: user.roleType 
+      role: user.role 
     };
 
     return {
@@ -55,7 +55,7 @@ export class AuthService {
         email: user.email,
         firstName: user.firstName,
         lastName: user.lastName,
-        role: user.roleType,
+        role: user.role,
       },
     };
   }

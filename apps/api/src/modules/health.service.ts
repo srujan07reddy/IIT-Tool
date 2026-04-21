@@ -1,8 +1,17 @@
 import { Injectable } from '@nestjs/common';
+import { DataSource } from 'typeorm';
 
 @Injectable()
 export class HealthService {
-  check() {
-    return { status: 'ok', uptime: process.uptime() };
+  constructor(private readonly dataSource: DataSource) {}
+
+  async check() {
+    await this.dataSource.query('SELECT 1');
+    return {
+      status: 'ok',
+      database: 'postgresql',
+      connection: 'active',
+      uptime: process.uptime(),
+    };
   }
 }

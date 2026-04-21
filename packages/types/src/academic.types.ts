@@ -6,6 +6,15 @@ export interface Course extends BaseEntity {
   durationMonths: number;
 }
 
+export interface Batch extends BaseEntity {
+  name: string;
+  code: string;
+  courseName: string;
+  startsOn?: string | Date;
+  endsOn?: string | Date;
+  isActive: boolean;
+}
+
 export interface Subject extends BaseEntity {
   courseId: string;
   name: string;
@@ -47,4 +56,16 @@ export interface ChapterWithTopics extends Chapter {
 
 export interface SubjectHierarchy extends Subject {
   chapters: ChapterWithTopics[];
+}
+
+export interface ContextCardContent {
+  whyLearn: string;
+  realWorldApplication: string;
+}
+
+export interface ContextCard extends BaseEntity {
+  topicId: string;
+  createdBy: string;
+  content: ContextCardContent;
+  isVerified: boolean;
 }

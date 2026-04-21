@@ -26,10 +26,8 @@ export class ContextCardEntity extends BaseEntity {
    */
   @Column({ type: 'jsonb' })
   content: {
-    analogy: string;
+    whyLearn: string;
     realWorldApplication: string;
-    criticalPoints: string[];
-    suggestedProblems: string[];
   };
 
   /**

@@ -13,7 +13,7 @@ import { ZodSchema } from 'zod';
  */
 @Injectable()
 export class GlobalValidationPipe implements PipeTransform {
-  constructor(private schema: ZodSchema) {}
+  constructor(private schema: ZodSchema<any>) {}
 
   transform(value: unknown, metadata: ArgumentMetadata) {
     try {

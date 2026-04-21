@@ -11,8 +11,20 @@ export const updateTopicStatusSchema = z.object({
 
 export const createSubjectSchema = z.object({
   courseId: uuidSchema,
+  batchId: uuidSchema.optional(),
   name: z.string().min(2, "Subject name is required"),
   code: z.string().min(2, "Subject code is required"),
 });
 
+export const contextCardSchema = z.object({
+  topicId: uuidSchema,
+  createdBy: uuidSchema.optional(),
+  content: z.object({
+    whyLearn: z.string().min(8, 'Why Learn is required'),
+    realWorldApplication: z.string().min(8, 'Real-world application is required'),
+  }),
+  isVerified: z.boolean().default(false),
+});
+
 export type UpdateTopicStatusInput = z.infer<typeof updateTopicStatusSchema>;
+export type ContextCardInput = z.infer<typeof contextCardSchema>;

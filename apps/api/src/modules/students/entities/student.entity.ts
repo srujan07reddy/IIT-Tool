@@ -1,7 +1,8 @@
-import { Entity, Column, OneToOne, JoinColumn, Index } from 'typeorm';
+import { Entity, Column, OneToOne, JoinColumn, Index, ManyToOne } from 'typeorm';
 import { BaseEntity } from '../../../common/entities/base.entity';
 import { ParentEntity } from './parent.entity';
 import { StudentStatus, Gender } from '@coaching-ops/types';
+import { BatchEntity } from '../../academics/entities/batch.entity';
 
 /**
  * StudentEntity
@@ -49,6 +50,13 @@ export class StudentEntity extends BaseEntity {
    */
   @Column()
   currentBatchId: string;
+
+  @ManyToOne(() => BatchEntity, (batch) => batch.students, {
+    nullable: false,
+    onDelete: 'RESTRICT',
+  })
+  @JoinColumn({ name: 'currentBatchId' })
+  batch: BatchEntity;
 
   @Column({ nullable: true })
   enrollmentDate: Date;

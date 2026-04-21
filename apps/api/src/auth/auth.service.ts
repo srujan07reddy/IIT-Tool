@@ -2,55 +2,33 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 
-export interface User {
-  id: number;
-  email: string;
-  role: string;
-  password: string;
-}
+import { forwardRef, Inject } from '@nestjs/common';
+import { UserEntity } from './entities/user.entity';
+import { UsersService } from '../users/users.service';
 
 @Injectable()
 export class AuthService {
-  // Mock users for demo - replace with database
-  private users: User[] = [
-    {
-      id: 1,
-      email: 'student@example.com',
-      role: 'student',
-      password: 'password',
-    },
-    {
-      id: 2,
-      email: 'staff@example.com',
-      role: 'staff',
-      password: 'password',
-    },
-    {
-      id: 3,
-      email: 'admin@example.com',
-      role: 'admin',
-      password: 'password',
-    },
-    {
-      id: 4,
-      email: 'technician@example.com',
-      role: 'technician',
-      password: 'password',
-    },
-  ];
+  constructor(
+    private jwtService: JwtService,
+    @Inject(forwardRef(() => UsersService))
+    private usersService: UsersService,
+  ) {}
 
-  constructor(private jwtService: JwtService) {}
+async hashPassword(password: string): Promise<string> {
+    const saltRounds = 12;
+    return bcrypt.hash(password, saltRounds);
+  }
 
-  async validateUser(email: string, password: string): Promise<any> {
-    const user = this.users.find(u => u.email === email);
-    if (user && user.password === password) { // Plain text for demo
+  async validateUser(email: string, password: string): Promise<UserEntity | null> {
+    const user = await this.usersService.findByEmailForAuth(email);
+    if (user && (await bcrypt.compare(password, user.password))) {
       const { password, ...result } = user;
-      return result;
+      return result as UserEntity;
     }
     return null;
   }
 
-  async login(user: any) {
+async login(user: UserEntity): Promise<{ access_token: string; user: { id: string; email: string; role: string; firstName: string; lastName: string } }> {
     const payload = { email: user.email, sub: user.id, role: user.role };
     return {
       access_token: this.jwtService.sign(payload),
@@ -58,27 +36,14 @@ export class AuthService {
         id: user.id,
         email: user.email,
         role: user.role,
+        firstName: user.firstName,
+        lastName: user.lastName,
       },
     };
   }
 
-  async register(email: string, password: string, role: string) {
-    // Check if user exists
-    if (this.users.find(u => u.email === email)) {
-      throw new UnauthorizedException('User already exists');
-    }
-
-    // Create user (no hashing for demo)
-    const newUser: User = {
-      id: this.users.length + 1,
-      email,
-      role,
-      password, // Plain text for demo
-    };
-
-    this.users.push(newUser);
-
-    const { password: _, ...result } = newUser;
-    return result;
+async register(email: string, password: string, role: string, createdBy?: string): Promise<UserEntity> {
+    const dto: any = { email, firstName: '', lastName: '', role, password }; // Minimal for register
+    return this.usersService.createUserByAdmin(createdBy || 'system', dto);
   }
 }

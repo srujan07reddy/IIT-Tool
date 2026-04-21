@@ -2,7 +2,9 @@ import { Controller, Post, Body, UseGuards, Req, HttpCode, HttpStatus, Unauthori
 import { AuthService } from './auth.service';
 import { UsersService } from '../users/users.service';
 import { LoginDto, LoginResponse } from '@coaching-ops/types';
+import { loginSchema } from '@coaching-ops/validation';
 import { Public } from '../../common/decorators/public.decorator';
+import { GlobalValidationPipe } from '../../common/pipes/validation.pipe';
 
 /**
  * AuthController
@@ -23,9 +25,11 @@ export class AuthController {
   @Public() // Custom decorator to bypass the global JWT guard
   @Post('login')
   @HttpCode(HttpStatus.OK)
-  async login(@Body() loginDto: LoginDto): Promise<LoginResponse> {
+  async login(
+    @Body(new GlobalValidationPipe(loginSchema as any)) loginDto: LoginDto,
+  ): Promise<LoginResponse> {
     // 1. Find the user by email
-    const user = await this.usersService.findByEmail(loginDto.email);
+    const user = await this.usersService.findByEmailForAuth(loginDto.email);
     
     if (!user) {
       throw new UnauthorizedException('Invalid credentials');
@@ -35,7 +39,9 @@ export class AuthController {
     await this.authService.validateUser(loginDto, user);
     
     // 3. Issue and return the JWT
-    return this.authService.login(user);
+    const response = await this.authService.login(user);
+    await this.usersService.markLastLogin(user.id);
+    return response;
   }
 
   /**

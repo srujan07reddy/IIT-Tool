@@ -25,9 +25,9 @@ export class UserEntity extends BaseEntity {
   @Column({
     type: 'enum',
     enum: UserRole,
-    default: UserRole.FACULTY,
+    default: UserRole.STAFF,
   })
-  roleType: UserRole;
+  role: UserRole;
 
   /**
    * Relationship to the detailed Role/Permissions table.
@@ -35,7 +35,7 @@ export class UserEntity extends BaseEntity {
    */
   @ManyToOne(() => RoleEntity, { nullable: true })
   @JoinColumn({ name: 'roleId' })
-  role?: RoleEntity;
+  roleDefinition?: RoleEntity;
 
   @Column({ nullable: true })
   roleId?: string;
@@ -44,5 +44,11 @@ export class UserEntity extends BaseEntity {
   isActive: boolean;
 
   @Column({ type: 'timestamptz', nullable: true })
-  lastLogin?: Date;
+  lastLoginAt?: Date | null;
+
+  @Column({ type: 'timestamptz', nullable: true })
+  passwordLastChangedAt?: Date | null;
+
+  @Column({ nullable: true })
+  createdBy?: string | null;
 }

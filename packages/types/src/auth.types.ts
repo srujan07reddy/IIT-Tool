@@ -6,6 +6,9 @@ export enum UserRole {
   MANAGEMENT = 'MANAGEMENT',
   FACULTY = 'FACULTY',
   OPERATIONS = 'OPERATIONS',
+  STAFF = 'STAFF',
+  TECHNICIAN = 'TECHNICIAN',
+  ACCOUNT = 'ACCOUNT',
   STUDENT = 'STUDENT',
 }
 
@@ -15,7 +18,9 @@ export interface User extends BaseEntity {
   lastName: string;
   role: UserRole;
   isActive: boolean;
+  createdBy?: string;
   lastLoginAt?: string | Date;
+  passwordLastChangedAt?: string | Date;
 }
 
 export type Permission = string;
@@ -40,4 +45,23 @@ export interface LoginResponse {
     lastName: string;
     role: UserRole;
   };
+}
+
+export interface AdminCreateUserDto {
+  email: string;
+  firstName: string;
+  lastName: string;
+  role: UserRole;
+  password: string;
+  isActive?: boolean;
+}
+
+export interface AdminResetPasswordDto {
+  userId: string;
+  newPassword: string;
+}
+
+export interface UpdateOwnPasswordDto {
+  currentPassword: string;
+  newPassword: string;
 }

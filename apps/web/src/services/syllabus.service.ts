@@ -1,23 +1,21 @@
-import type { SubjectHierarchy, TopicStatus } from '@coaching-ops/types';
+import { api } from '@/lib/api';
+import type { SubjectEntity, ChapterEntity, TopicEntity, TopicStatus } from '@coaching-ops/types';
 
-import { syllabusHierarchy } from '@/lib/mock-data';
-
-export async function getSyllabusHierarchy(): Promise<SubjectHierarchy[]> {
-  return Promise.resolve(syllabusHierarchy);
+export interface SyllabusTree {
+  subjects: Subject[];
 }
 
-export async function updateTopicStatus(
-  topicId: string,
-  status: TopicStatus,
-): Promise<SubjectHierarchy[]> {
-  for (const subject of syllabusHierarchy) {
-    for (const chapter of subject.chapters) {
-      const topic = chapter.topics.find((item) => item.id === topicId);
-      if (topic?.progress) {
-        topic.progress.status = status;
-      }
-    }
-  }
+export async function getFullSyllabusTree(): Promise<SyllabusTree> {
+  const { data } = await api.get('/academics/syllabus');
+  return data;
+}
 
-  return Promise.resolve(syllabusHierarchy);
+export async function updateTopicStatus(topicId: string, status: TopicStatus): Promise<TopicEntity> {
+  const { data } = await api.patch(`/academics/topics/${topicId}/status`, { status });
+  return data;
+}
+
+export async function getSubjectProgress(subjectId: string): Promise<number> {
+  const { data } = await api.get(`/academics/subjects/${subjectId}/progress`);
+  return data.progress;
 }
