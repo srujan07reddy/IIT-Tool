@@ -12,10 +12,20 @@
     "@coaching-ops/types": "file:../../packages/types",
     "@coaching-ops/ui": "file:../../packages/ui",
     "@coaching-ops/validation": "file:../../packages/validation",
+    "@hookform/resolvers": "^3.10.0",
     "axios": "^1.15.1",
-    "framer-motion": "latest",
-    "next": "latest",
-    "react": "latest",
-    "react-dom": "latest"
+    "framer-motion": "12.23.24",
+    "next": "16.2.4",
+    "react": "19.2.0",
+    "react-dom": "19.2.0",
+    "react-hook-form": "^7.62.0",
+    "recharts": "^2.15.4",
+    "zustand": "^5.0.8"
+  },
+  "devDependencies": {
+    "@types/node": "^24.9.1",
+    "@types/react": "19.2.14",
+    "@types/react-dom": "^19.2.2",
+    "typescript": "^5.9.3"
   }
 }

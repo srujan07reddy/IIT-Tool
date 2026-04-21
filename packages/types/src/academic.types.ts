@@ -31,3 +31,20 @@ export enum TopicStatus {
   IN_PROGRESS = 'IN_PROGRESS',
   COMPLETED = 'COMPLETED',
 }
+
+export interface TopicProgress extends BaseEntity {
+  topicId: string;
+  batchId: string;
+  facultyId: string;
+  status: TopicStatus;
+  remarks?: string;
+  updatedBy?: string;
+}
+
+export interface ChapterWithTopics extends Chapter {
+  topics: Array<Topic & { progress?: TopicProgress }>;
+}
+
+export interface SubjectHierarchy extends Subject {
+  chapters: ChapterWithTopics[];
+}

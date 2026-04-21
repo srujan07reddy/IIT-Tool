@@ -30,5 +30,7 @@ export const createStudentSchema = z.object({
   academicProfile: academicProfileSchema,
 });
 
+export const StudentRegistrationSchema = createStudentSchema;
+
 // We can export the inferred type so our apps can use it directly for form data
 export type CreateStudentInput = z.infer<typeof createStudentSchema>;

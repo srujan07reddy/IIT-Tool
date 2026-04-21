@@ -5,6 +5,8 @@ export const loginSchema = z.object({
   password: z.string().min(8, "Password must be at least 8 characters long"),
 });
 
+export const LoginSchema = loginSchema;
+
 export const userRoleSchema = z.enum([
   'SUPER_ADMIN', 'ADMIN', 'MANAGEMENT', 'FACULTY', 'OPERATIONS', 'STUDENT'
 ]);
