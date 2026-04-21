@@ -1,0 +1,95 @@
+.container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f9fafb; /* Professional light gray [cite: 450] */
+  padding: 20px;
+}
+
+.loginCard {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(12px); /* Centered glassmorphism [cite: 450, 451] */
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 40px;
+  width: 100%;
+  max-width: 440px;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 8px;
+}
+
+.subtitle {
+  color: #6b7280;
+  font-size: 14px;
+}
+
+.roleTabs {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+  margin-bottom: 24px;
+  background: #f3f4f6;
+  padding: 4px;
+  border-radius: 8px;
+}
+
+.roleButton {
+  padding: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  border-radius: 6px;
+  color: #4b5563;
+  transition: all 0.2s;
+}
+
+.activeRole {
+  background: #ffffff;
+  color: #111827;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.label {
+  font-size: 13px;
+  font-weight: 500;
+  color: #374151;
+  margin-bottom: 6px;
+  display: block;
+}
+
+.submitBtn {
+  width: 100%;
+  margin-top: 10px;
+  padding: 12px;
+}
+
+.footer {
+  margin-top: 24px;
+  text-align: center;
+}
+
+.footer a {
+  font-size: 13px;
+  color: #2563eb;
+  text-decoration: none;
+}

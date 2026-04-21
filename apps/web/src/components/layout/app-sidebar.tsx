@@ -1,86 +1,57 @@
 'use client';
-
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { UserRole } from '@coaching-ops/types';
-import { Button, Card, PageContainer, Text } from '@coaching-ops/ui';
-
-import { useAuthStore } from '@/store/useAuthStore';
-
-interface NavItem {
-  href: string;
-  label: string;
-  roles: UserRole[];
-}
-
-const navItems: NavItem[] = [
-  { href: '/dashboard', label: 'Overview', roles: [UserRole.ADMIN, UserRole.FACULTY, UserRole.OPERATIONS] },
-  { href: '/students', label: 'Students', roles: [UserRole.ADMIN, UserRole.OPERATIONS, UserRole.FACULTY] },
-  { href: '/syllabus', label: 'Syllabus Tracker', roles: [UserRole.ADMIN, UserRole.FACULTY] },
-  { href: '/applications', label: 'Applications', roles: [UserRole.ADMIN, UserRole.OPERATIONS] },
-  { href: '/assessments/question-bank', label: 'Question Bank', roles: [UserRole.ADMIN, UserRole.FACULTY] },
-  { href: '/assessments/omr-upload', label: 'OMR Upload', roles: [UserRole.ADMIN, UserRole.OPERATIONS] },
-  { href: '/leadership', label: 'Leadership', roles: [UserRole.ADMIN] },
-];
+import { Home, Users, Settings, BookOpen, FileText } from 'lucide-react';
+import { useEffect, useState } from 'react';
 
 export function AppSidebar() {
   const pathname = usePathname();
-  const role = useAuthStore((state) => state.role) ?? UserRole.ADMIN;
-  const user = useAuthStore((state) => state.user);
+  const [role, setRole] = useState<string>('');
 
-  const allowedItems = navItems.filter((item) => item.roles.includes(role));
+  useEffect(() => {
+    const userStr = localStorage.getItem('user');
+    if (userStr) {
+      const user = JSON.parse(userStr);
+      setRole(user.role);
+    }
+  }, []);
+
+  const getLinks = () => {
+    if (!role) return [];
+    
+    const baseLinks = [{ href: `/${role.toLowerCase()}`, label: 'Dashboard', icon: Home }];
+    
+    if (role === 'ADMIN') {
+      baseLinks.push({ href: '/dashboard/users', label: 'User Management', icon: Users });
+      baseLinks.push({ href: '/dashboard/settings', label: 'System Settings', icon: Settings });
+      baseLinks.push({ href: '/students', label: 'Student Directory', icon: Users });
+    }
+    if (role === 'STAFF') {
+      baseLinks.push({ href: '/students', label: 'Student Directory', icon: Users });
+    }
+    if (role === 'STUDENT') {
+      baseLinks.push({ href: '/student/syllabus', label: 'My Syllabus', icon: BookOpen });
+    }
+    if (role === 'TECHNICIAN') {
+      baseLinks.push({ href: '/technician/register', label: 'Register Student', icon: Users });
+    }
+    if (role === 'STAFF' || role === 'ADMIN' || role === 'OPERATIONS') {
+      baseLinks.push({ href: '/dashboard/applications', label: 'Applications', icon: FileText });
+    }
+    return baseLinks;
+  };
 
   return (
-    <aside
-      style={{
-        position: 'sticky',
-        top: 24,
-        alignSelf: 'start',
-      }}
-    >
-      <PageContainer style={{ width: '100%' }}>
-        <Card style={{ padding: 20, background: 'rgba(15, 23, 42, 0.94)' }}>
-          <div style={{ display: 'grid', gap: 20 }}>
-            <div>
-              <Text style={{ color: '#7dd3fc', fontSize: '0.78rem', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
-                Ops Console
-              </Text>
-              <h2 style={{ margin: '0.4rem 0 0', fontSize: '1.3rem' }}>
-                {user ? `${user.firstName} ${user.lastName}` : 'Authenticated User'}
-              </h2>
-              <Text>{role.replace('_', ' ')}</Text>
-            </div>
-            <nav style={{ display: 'grid', gap: 10 }}>
-              {allowedItems.map((item) => {
-                const active = pathname === item.href || pathname.startsWith(`${item.href}/`);
-
-                return (
-                  <Link
-                    key={item.href}
-                    href={item.href}
-                    style={{
-                      padding: '0.9rem 1rem',
-                      borderRadius: 16,
-                      color: '#e2e8f0',
-                      textDecoration: 'none',
-                      fontWeight: 600,
-                      background: active
-                        ? 'linear-gradient(135deg, rgba(37, 99, 235, 0.45), rgba(13, 148, 136, 0.28))'
-                        : 'rgba(30, 41, 59, 0.68)',
-                      border: '1px solid rgba(148, 163, 184, 0.14)',
-                    }}
-                  >
-                    {item.label}
-                  </Link>
-                );
-              })}
-            </nav>
-            <Button type="button" variant="ghost" style={{ width: '100%', justifyContent: 'center' }}>
-              Role-scoped navigation
-            </Button>
-          </div>
-        </Card>
-      </PageContainer>
+    <aside className="w-64 bg-gray-900 text-white min-h-screen flex flex-col border-r border-gray-800">
+      <div className="p-5 text-2xl font-bold border-b border-gray-800 tracking-wider">IIT ERP</div>
+      <nav className="flex-1 p-4 space-y-2 mt-4">
+        {getLinks().map((link) => (
+          <Link key={link.href} href={link.href} className={`flex items-center gap-3 p-3 rounded-md transition-colors ${pathname.startsWith(link.href) ? 'bg-indigo-600 text-white shadow-sm' : 'text-gray-300 hover:bg-gray-800 hover:text-white'}`}>
+            <link.icon className="w-5 h-5" />
+            <span className="font-medium">{link.label}</span>
+          </Link>
+        ))}
+      </nav>
     </aside>
   );
 }

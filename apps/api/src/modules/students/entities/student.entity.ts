@@ -1,9 +1,10 @@
-import { Entity, Column, OneToOne, JoinColumn, Index, ManyToOne } from 'typeorm';
+import { Entity, Column, OneToOne, JoinColumn, Index, ManyToOne, OneToMany } from 'typeorm';
 import { BaseEntity } from '../../../common/entities/base.entity';
 import { ParentEntity } from './parent.entity';
-import { StudentStatus, Gender } from '@coaching-ops/types';
+import { StudentStatus, Gender, StudentCategory } from '@coaching-ops/types';
 import { BatchEntity } from '../../academics/entities/batch.entity';
-
+import { DocumentEntity } from './document.entity';
+ 
 /**
  * StudentEntity
  * The central record for a student. 
@@ -44,6 +45,13 @@ export class StudentEntity extends BaseEntity {
   })
   status: StudentStatus;
 
+  @Column({
+    type: 'enum',
+    enum: StudentCategory,
+    default: StudentCategory.GENERAL,
+  })
+  category: StudentCategory;
+
   /**
    * Academic Connection
    * Linking the student to a specific batch or course.
@@ -69,6 +77,12 @@ export class StudentEntity extends BaseEntity {
   @OneToOne(() => ParentEntity, (parent) => parent.student, { cascade: true })
   @JoinColumn()
   parentDetails: ParentEntity;
+
+  /**
+   * One-to-Many relationship with uploaded documents.
+   */
+  @OneToMany(() => DocumentEntity, (doc) => doc.student, { cascade: true })
+  documents: DocumentEntity[];
 
   @Column({ type: 'jsonb', nullable: true })
   metadata: Record<string, any>; // For flexible fields like "Previous School" or "Interests"

@@ -9,7 +9,7 @@ import styles from './page.module.css';
 /**
  * Available system roles for the ERP portal.
  */
-const ROLES = ['ADMIN', 'STAFF', 'STUDENT', 'TECHNICIAN'] as const;
+const ROLES = ['ADMIN', 'STAFF', 'STUDENT', 'TECHNICIAN', 'ACCOUNT'] as const;
 type Role = typeof ROLES[number];
 
 /**
@@ -43,6 +43,9 @@ export default function LoginPage() {
         // Store token (in a real app, use secure storage)
         localStorage.setItem('token', response.data.access_token);
         localStorage.setItem('user', JSON.stringify(response.data.user));
+        
+        // Set cookie for Next.js Middleware route guards
+        document.cookie = `token=${response.data.access_token}; path=/; max-age=86400`;
         
         // Redirect to role-specific dashboard
         router.push(`/${selectedRole.toLowerCase()}`);
