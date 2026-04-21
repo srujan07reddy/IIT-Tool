@@ -13,6 +13,7 @@ export default function AppHeader({ role, isSidebarOpen, onToggleSidebar }: AppH
 
   const handleLogout = () => {
     // TODO: Clear auth state
+    localStorage.removeItem('authToken'); // Assuming 'authToken' is the key for the auth token
     router.push('/');
   };
 
