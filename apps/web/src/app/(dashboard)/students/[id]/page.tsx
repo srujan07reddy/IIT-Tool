@@ -29,22 +29,22 @@ export default function StudentProfilePage() {
     if (id) fetchStudentProfile();
   }, [id]);
 
-  if (!student) return <div className="p-8 text-gray-500 flex items-center justify-center min-h-[400px]"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600"></div></div>;
+  if (!student) return <div className="p-8 text-[#00F3FF] flex flex-col items-center justify-center min-h-[400px] font-mono tracking-widest text-xs uppercase"><div className="animate-spin rounded-none h-8 w-8 border border-[#00F3FF] shadow-[0_0_15px_#00F3FF] mb-4"></div>Decrypting Dossier...</div>;
 
   return (
     <div className="space-y-6 max-w-6xl mx-auto">
       <div>
-        <Heading>Student Profile</Heading>
-        <Text>Comprehensive record-keeping and document verification.</Text>
+        <h1 className="text-3xl font-black tracking-widest uppercase text-[#E0E0E0] drop-shadow-[0_0_8px_rgba(224,224,224,0.3)]">Operative Dossier</h1>
+        <p className="text-xs font-bold uppercase tracking-widest text-[#00F3FF]/70 mt-1">Comprehensive intelligence and data matrices.</p>
       </div>
 
       <StudentProfileCard student={student} />
 
       {/* Tabbed Navigation */}
-      <div className="flex gap-2 border-b border-gray-200 mt-8 mb-6">
-        <button onClick={() => setActiveTab('personal')} className={`px-4 py-3 font-medium text-sm border-b-2 flex items-center gap-2 transition-colors ${activeTab === 'personal' ? 'border-indigo-600 text-indigo-600' : 'border-transparent text-gray-500 hover:text-gray-700'}`}><User className="w-4 h-4"/> Personal Info</button>
-        <button onClick={() => setActiveTab('academic')} className={`px-4 py-3 font-medium text-sm border-b-2 flex items-center gap-2 transition-colors ${activeTab === 'academic' ? 'border-indigo-600 text-indigo-600' : 'border-transparent text-gray-500 hover:text-gray-700'}`}><BookOpen className="w-4 h-4"/> Academic Records</button>
-        <button onClick={() => setActiveTab('documents')} className={`px-4 py-3 font-medium text-sm border-b-2 flex items-center gap-2 transition-colors ${activeTab === 'documents' ? 'border-indigo-600 text-indigo-600' : 'border-transparent text-gray-500 hover:text-gray-700'}`}><FileText className="w-4 h-4"/> Documents & Verification</button>
+      <div className="flex gap-2 border-b border-[#00F3FF]/30 mt-8 mb-6">
+        <button onClick={() => setActiveTab('personal')} className={`px-4 py-3 font-black text-[10px] tracking-widest uppercase border-b-2 flex items-center gap-2 transition-all ${activeTab === 'personal' ? 'border-[#00F3FF] text-[#00F3FF] bg-[#00F3FF]/5 shadow-[inset_0_-5px_10px_rgba(0,243,255,0.1)]' : 'border-transparent text-[#E0E0E0]/50 hover:text-[#00F3FF] hover:border-[#00F3FF]/50'}`}><User className="w-4 h-4"/> Identity Matrix</button>
+        <button onClick={() => setActiveTab('academic')} className={`px-4 py-3 font-black text-[10px] tracking-widest uppercase border-b-2 flex items-center gap-2 transition-all ${activeTab === 'academic' ? 'border-[#00F3FF] text-[#00F3FF] bg-[#00F3FF]/5 shadow-[inset_0_-5px_10px_rgba(0,243,255,0.1)]' : 'border-transparent text-[#E0E0E0]/50 hover:text-[#00F3FF] hover:border-[#00F3FF]/50'}`}><BookOpen className="w-4 h-4"/> Academic Telemetry</button>
+        <button onClick={() => setActiveTab('documents')} className={`px-4 py-3 font-black text-[10px] tracking-widest uppercase border-b-2 flex items-center gap-2 transition-all ${activeTab === 'documents' ? 'border-[#00F3FF] text-[#00F3FF] bg-[#00F3FF]/5 shadow-[inset_0_-5px_10px_rgba(0,243,255,0.1)]' : 'border-transparent text-[#E0E0E0]/50 hover:text-[#00F3FF] hover:border-[#00F3FF]/50'}`}><FileText className="w-4 h-4"/> Encrypted Files</button>
       </div>
 
       {/* Tab Content */}
@@ -52,28 +52,28 @@ export default function StudentProfilePage() {
         
         {/* PERSONAL INFO TAB */}
         {activeTab === 'personal' && (
-          <Card>
+          <Card className="bg-[#0a0a0a]/70 backdrop-blur-[10px] border border-[#00F3FF]/50 shadow-[0_0_15px_rgba(0,243,255,0.05)] rounded-none">
             <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-y-8 gap-x-12 pt-6">
-              <div><p className="text-sm font-medium text-gray-500 uppercase tracking-wider">Date of Birth</p><p className="text-gray-900 font-medium mt-1">{student.dateOfBirth || 'N/A'}</p></div>
-              <div><p className="text-sm font-medium text-gray-500 uppercase tracking-wider">Gender</p><p className="text-gray-900 font-medium mt-1">{student.gender || 'N/A'}</p></div>
-              <div><p className="text-sm font-medium text-gray-500 uppercase tracking-wider">Category</p><p className="text-gray-900 font-medium mt-1">{student.category || 'N/A'}</p></div>
-              <div><p className="text-sm font-medium text-gray-500 uppercase tracking-wider">Address</p><p className="text-gray-900 font-medium mt-1">{student.address || 'N/A'}</p></div>
-              <div><p className="text-sm font-medium text-gray-500 uppercase tracking-wider">Father's Name</p><p className="text-gray-900 font-medium mt-1">{student.parentInfo?.fatherName || student.parentDetails?.fatherName || 'N/A'}</p></div>
-              <div><p className="text-sm font-medium text-gray-500 uppercase tracking-wider">Mother's Name</p><p className="text-gray-900 font-medium mt-1">{student.parentInfo?.motherName || student.parentDetails?.motherName || 'N/A'}</p></div>
+              <div><p className="text-[10px] font-black text-[#00F3FF]/70 uppercase tracking-widest">Date of Origin</p><p className="text-[#E0E0E0] font-semibold mt-1 tracking-wider">{student.dateOfBirth || 'N/A'}</p></div>
+              <div><p className="text-[10px] font-black text-[#00F3FF]/70 uppercase tracking-widest">Biological Type</p><p className="text-[#E0E0E0] font-semibold mt-1 tracking-wider">{student.gender || 'N/A'}</p></div>
+              <div><p className="text-[10px] font-black text-[#00F3FF]/70 uppercase tracking-widest">Classification</p><p className="text-[#E0E0E0] font-semibold mt-1 tracking-wider">{student.category || 'N/A'}</p></div>
+              <div><p className="text-[10px] font-black text-[#00F3FF]/70 uppercase tracking-widest">Coordinates</p><p className="text-[#E0E0E0] font-semibold mt-1 tracking-wider">{student.address || 'N/A'}</p></div>
+              <div><p className="text-[10px] font-black text-[#00F3FF]/70 uppercase tracking-widest">Paternal Identity</p><p className="text-[#E0E0E0] font-semibold mt-1 tracking-wider">{student.parentInfo?.fatherName || student.parentDetails?.fatherName || 'N/A'}</p></div>
+              <div><p className="text-[10px] font-black text-[#00F3FF]/70 uppercase tracking-widest">Maternal Identity</p><p className="text-[#E0E0E0] font-semibold mt-1 tracking-wider">{student.parentInfo?.motherName || student.parentDetails?.motherName || 'N/A'}</p></div>
             </CardContent>
           </Card>
         )}
 
         {/* ACADEMIC RECORDS TAB */}
         {activeTab === 'academic' && (
-          <Card>
+          <Card className="bg-[#0a0a0a]/70 backdrop-blur-[10px] border border-[#00F3FF]/50 shadow-[0_0_15px_rgba(0,243,255,0.05)] rounded-none">
             <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-y-8 gap-x-12 pt-6">
-              <div><p className="text-sm font-medium text-gray-500 uppercase tracking-wider">Enrolled Batch ID</p><p className="text-gray-900 font-medium mt-1">{student.currentBatchId || 'Not Assigned'}</p></div>
-              <div><p className="text-sm font-medium text-gray-500 uppercase tracking-wider">Enrollment Date</p><p className="text-gray-900 font-medium mt-1">{student.enrollmentDate ? new Date(student.enrollmentDate).toLocaleDateString() : 'N/A'}</p></div>
-              <div><p className="text-sm font-medium text-gray-500 uppercase tracking-wider">Previous School</p><p className="text-gray-900 font-medium mt-1">{student.academicProfile?.previousSchool || 'N/A'}</p></div>
-              <div><p className="text-sm font-medium text-gray-500 uppercase tracking-wider">Board</p><p className="text-gray-900 font-medium mt-1">{student.academicProfile?.board || 'N/A'}</p></div>
-              <div><p className="text-sm font-medium text-gray-500 uppercase tracking-wider">Last Score</p><p className="text-gray-900 font-medium mt-1">{student.academicProfile?.lastScorePercentage ? `${student.academicProfile.lastScorePercentage}%` : 'N/A'}</p></div>
-              <div><p className="text-sm font-medium text-gray-500 uppercase tracking-wider">Target Exam</p><p className="text-gray-900 font-medium mt-1">{student.academicProfile?.targetExam || 'N/A'}</p></div>
+              <div><p className="text-[10px] font-black text-[#00F3FF]/70 uppercase tracking-widest">Active Cohort ID</p><p className="text-[#E0E0E0] font-semibold mt-1 tracking-wider">{student.currentBatchId || 'Not Assigned'}</p></div>
+              <div><p className="text-[10px] font-black text-[#00F3FF]/70 uppercase tracking-widest">Activation Date</p><p className="text-[#E0E0E0] font-semibold mt-1 tracking-wider">{student.enrollmentDate ? new Date(student.enrollmentDate).toLocaleDateString() : 'N/A'}</p></div>
+              <div><p className="text-[10px] font-black text-[#00F3FF]/70 uppercase tracking-widest">Previous Installation</p><p className="text-[#E0E0E0] font-semibold mt-1 tracking-wider">{student.academicProfile?.previousSchool || 'N/A'}</p></div>
+              <div><p className="text-[10px] font-black text-[#00F3FF]/70 uppercase tracking-widest">Sector Board</p><p className="text-[#E0E0E0] font-semibold mt-1 tracking-wider">{student.academicProfile?.board || 'N/A'}</p></div>
+              <div><p className="text-[10px] font-black text-[#00F3FF]/70 uppercase tracking-widest">Previous Metric</p><p className="text-[#00F3FF] font-mono mt-1 tracking-wider">{student.academicProfile?.lastScorePercentage ? `${student.academicProfile.lastScorePercentage}%` : 'N/A'}</p></div>
+              <div><p className="text-[10px] font-black text-[#00F3FF]/70 uppercase tracking-widest">Primary Target</p><p className="text-[#E0E0E0] font-semibold mt-1 tracking-wider">{student.academicProfile?.targetExam || 'N/A'}</p></div>
             </CardContent>
           </Card>
         )}

@@ -6,6 +6,7 @@ export * from './card';
 export * from './dialog';
 export * from './drawer';
 export * from './layout';
+export * from './label';
 export * from './select';
 export * from './table';
 export * from './tabs';

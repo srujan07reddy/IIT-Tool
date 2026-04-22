@@ -1,92 +1,63 @@
 'use client';
 
-import { useState } from 'react';
-import type { SubjectHierarchy, TopicStatus } from '@coaching-ops/types';
-import {
-  Badge,
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-  Select,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-  Text,
-} from '@coaching-ops/ui';
+import React, { useState } from 'react';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@coaching-ops/ui';
+import { AiConceptCard } from './ai-concept-card';
 
-import { updateTopicStatus } from '@/services/syllabus.service';
+// Mock data mapping to the Academic Skeleton API (Phase 2)
+const MOCK_SYLLABUS = [
+  { id: '1', subject: 'Physics', chapter: 'Kinematics', topic: 'Newton’s Laws of Motion', status: 'COMPLETED' },
+  { id: '2', subject: 'Physics', chapter: 'Kinematics', topic: 'Projectile Motion', status: 'IN_PROGRESS' },
+  { id: '3', subject: 'Chemistry', chapter: 'Thermodynamics', topic: 'First Law of Thermodynamics', status: 'PENDING' },
+];
 
-const toneMap: Record<TopicStatus, 'warning' | 'info' | 'success'> = {
-  PENDING: 'warning',
-  IN_PROGRESS: 'info',
-  COMPLETED: 'success',
-};
+export function TopicStatusTable({ data }: { data?: any }) {
+  const [activeTopic, setActiveTopic] = useState<any>(null);
+  const [topics, setTopics] = useState(data?.subjects || MOCK_SYLLABUS);
 
-export function TopicStatusTable({ data }: { data: SubjectHierarchy[] }) {
-  const [tree, setTree] = useState(data);
-  const [savingTopicId, setSavingTopicId] = useState<string | null>(null);
+  const handleStatusChange = (id: string, newStatus: string) => {
+    setTopics((prev: any[]) => prev.map(t => t.id === id ? { ...t, status: newStatus } : t));
+    // TODO: Wire to apiClient.patch(`/syllabus/topics/${id}/status`, { status: newStatus })
+  };
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Topic progress</CardTitle>
-        <Text>Faculty can update individual topic states inline without losing the subject and chapter context.</Text>
-      </CardHeader>
-      <CardContent>
+    <div className="flex gap-6 items-start">
+      <div className="flex-1 bg-[#0a0a0a]/70 backdrop-blur-[10px] border border-[#00F3FF] shadow-[0_0_15px_rgba(0,243,255,0.05)] overflow-hidden">
         <Table>
-          <TableHeader>
+          <TableHeader className="bg-[#050505] border-b-2 border-[#00F3FF]">
             <TableRow>
-              <TableHead>Subject</TableHead>
-              <TableHead>Chapter</TableHead>
-              <TableHead>Topic</TableHead>
-              <TableHead>Status</TableHead>
-              <TableHead>Update</TableHead>
+              <TableHead className="text-[#00F3FF] font-bold tracking-widest uppercase text-xs">Subject</TableHead>
+              <TableHead className="text-[#00F3FF] font-bold tracking-widest uppercase text-xs">Chapter</TableHead>
+              <TableHead className="text-[#00F3FF] font-bold tracking-widest uppercase text-xs">Topic</TableHead>
+              <TableHead className="text-[#00F3FF] font-bold tracking-widest uppercase text-xs">Status</TableHead>
+              <TableHead className="text-[#00F3FF] font-bold tracking-widest uppercase text-xs">Insights</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
-            {tree.flatMap((subject) =>
-              subject.chapters.flatMap((chapter) =>
-                chapter.topics.map((topic) => {
-                  const status = topic.progress?.status ?? 'PENDING';
-                  const saving = savingTopicId === topic.id;
-
-                  return (
-                    <TableRow key={topic.id}>
-                      <TableCell>{subject.name}</TableCell>
-                      <TableCell>{chapter.name}</TableCell>
-                      <TableCell>{topic.name}</TableCell>
-                      <TableCell>
-                        <Badge tone={toneMap[status]}>{status.replace('_', ' ')}</Badge>
-                      </TableCell>
-                      <TableCell>
-                        <Select
-                          value={status}
-                          disabled={saving}
-                          onChange={async (event) => {
-                            const nextStatus = event.target.value as TopicStatus;
-                            setSavingTopicId(topic.id);
-                            const nextTree = await updateTopicStatus(topic.id, nextStatus);
-                            setTree([...nextTree]);
-                            setSavingTopicId(null);
-                          }}
-                        >
-                          <option value="PENDING">Pending</option>
-                          <option value="IN_PROGRESS">In Progress</option>
-                          <option value="COMPLETED">Completed</option>
-                        </Select>
-                      </TableCell>
-                    </TableRow>
-                  );
-                }),
-              ),
-            )}
+            {topics.map((row: any) => (
+              <TableRow key={row.id} className="border-b border-[#222] even:bg-[#111111] hover:bg-[#1a1a1a] transition-colors">
+                <TableCell className="font-semibold text-[#E0E0E0]">{row.subject}</TableCell>
+                <TableCell className="text-[#E0E0E0]/70">{row.chapter}</TableCell>
+                <TableCell className="text-[#E0E0E0]/90">{row.topic}</TableCell>
+                <TableCell className="p-3">
+                  <select 
+                    value={row.status} 
+                    onChange={(e) => handleStatusChange(row.id, e.target.value)}
+                    className={`text-xs font-bold px-3 py-2 bg-transparent border outline-none tracking-wider appearance-none ${row.status === 'COMPLETED' ? 'text-[#00F3FF] border-[#00F3FF] shadow-[0_0_8px_rgba(0,243,255,0.2)]' : row.status === 'IN_PROGRESS' ? 'text-[#FF00E5] border-[#FF00E5] shadow-[0_0_8px_rgba(255,0,229,0.2)]' : 'text-[#E0E0E0]/50 border-[#E0E0E0]/30'}`}
+                  >
+                    <option value="PENDING">PENDING</option>
+                    <option value="IN_PROGRESS">IN PROGRESS</option>
+                    <option value="COMPLETED">COMPLETED</option>
+                  </select>
+                </TableCell>
+                <TableCell className="p-3"><button onClick={() => setActiveTopic(row)} className="text-[#00F3FF] border border-[#00F3FF]/30 hover:bg-[#00F3FF]/10 hover:shadow-[0_0_10px_#00F3FF] px-3 py-1.5 text-xs tracking-widest uppercase font-semibold transition-all">Scan</button></TableCell>
+              </TableRow>
+            ))}
           </TableBody>
         </Table>
-      </CardContent>
-    </Card>
+      </div>
+      
+      {activeTopic && <div className="w-[400px] sticky top-24 transition-all duration-300"><AiConceptCard topic={activeTopic} onClose={() => setActiveTopic(null)} /></div>}
+    </div>
   );
 }

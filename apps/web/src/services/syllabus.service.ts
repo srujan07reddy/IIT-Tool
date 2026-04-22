@@ -1,16 +1,21 @@
 import { api } from '@/lib/api';
-import type { SubjectEntity, ChapterEntity, TopicEntity, TopicStatus } from '@coaching-ops/types';
+import type { Subject, Chapter, Topic, TopicStatus } from '@coaching-ops/types';
 
 export interface SyllabusTree {
   subjects: Subject[];
 }
 
 export async function getFullSyllabusTree(): Promise<SyllabusTree> {
-  const { data } = await api.get('/academics/syllabus');
-  return data;
+  try {
+    const { data } = await api.get('/academics/syllabus');
+    return data;
+  } catch (error) {
+    console.warn('Failed to fetch syllabus tree, returning empty data:', error);
+    return { subjects: [] };
+  }
 }
 
-export async function updateTopicStatus(topicId: string, status: TopicStatus): Promise<TopicEntity> {
+export async function updateTopicStatus(topicId: string, status: TopicStatus): Promise<Topic> {
   const { data } = await api.patch(`/academics/topics/${topicId}/status`, { status });
   return data;
 }

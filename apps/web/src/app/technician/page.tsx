@@ -1,9 +1,9 @@
 'use client';
 
 import React, { useState } from 'react';
-import { apiClient } from '../../../services/api-client';
+import { apiClient } from '../../services/api-client';
 import { Button, Input, Label, Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@coaching-ops/ui';
-import { AppLayout } from '../../../components/layout/app-layout';
+import { AppLayout } from '../../components/layout/app-layout';
 import { StudentCategory, Gender } from '@coaching-ops/types';
 
 // This would ideally come from an API call to the batches module

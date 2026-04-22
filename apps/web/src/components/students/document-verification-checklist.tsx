@@ -79,7 +79,7 @@ export function DocumentVerificationChecklist({ studentId }: { studentId: string
                   <Badge 
                     tone={
                       doc.verificationStatus === 'VERIFIED' ? 'success' : 
-                      doc.verificationStatus === 'REJECTED' ? 'critical' : 'warning'
+                      doc.verificationStatus === 'REJECTED' ? 'danger' : 'warning'
                     }
                   >
                     {doc.verificationStatus || 'PENDING'}

@@ -16,7 +16,7 @@ export function StudentProfileCard({ student }: { student: any }) {
           <Text className="text-gray-500 font-mono mt-1">Roll Number: {student.rollNumber}</Text>
         </div>
         <div>
-          <Badge tone={student.status === 'ACTIVE' ? 'success' : student.status === 'PROSPECT' ? 'warning' : 'neutral'}>
+          <Badge tone={student.status === 'ACTIVE' ? 'success' : student.status === 'PROSPECT' ? 'warning' : 'default'}>
             {student.status || 'UNKNOWN'}
           </Badge>
         </div>

@@ -1,4 +1,6 @@
 import React from 'react';
+import './globals.css';
+import ProgressProvider from '../components/providers/progress-provider';
 
 export default function RootLayout({
   children,
@@ -7,7 +9,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body className="antialiased">
+        <ProgressProvider>
+          {children}
+        </ProgressProvider>
+      </body>
     </html>
   );
 }

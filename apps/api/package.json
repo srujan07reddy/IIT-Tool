@@ -29,13 +29,16 @@
     "reflect-metadata": "latest",
     "rxjs": "latest",
     "typeorm": "^0.3.x",
-    "zod": "latest"
+    "zod": "^3.23.11"
   },
   "devDependencies": {
     "@nestjs/cli": "latest",
+    "@nestjs/testing": "^11.1.19",
     "@types/bcrypt": "^5.0.2",
+    "@types/jest": "^30.0.0",
     "@types/node": "latest",
     "@types/passport-jwt": "latest",
+    "@types/supertest": "^7.2.0",
     "jest": "latest",
     "supertest": "latest",
     "ts-jest": "latest"

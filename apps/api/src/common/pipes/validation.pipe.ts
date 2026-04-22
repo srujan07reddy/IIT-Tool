@@ -25,7 +25,7 @@ export class GlobalValidationPipe implements PipeTransform {
       // providing the exact field that failed. [cite: 881, 1059]
       throw new BadRequestException({
         message: 'Validation failed',
-        errors: error instanceof ZodError ? error.errors : error,
+        errors: error instanceof ZodError ? error.issues : error,
       });
     }
   }

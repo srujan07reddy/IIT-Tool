@@ -8,7 +8,7 @@ import { AUTH_TOKEN_KEY } from '@/store/useAuthStore';
 
 export function buildApiClient(): AxiosInstance {
   const api = axios.create({
-    baseURL: process.env.NEXT_PUBLIC_API_URL || '/api',
+    baseURL: process.env.NEXT_PUBLIC_API_URL || (typeof window === 'undefined' ? 'http://localhost:3000/api' : '/api'),
     withCredentials: true,
   });
 

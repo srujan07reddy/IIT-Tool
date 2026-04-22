@@ -32,5 +32,13 @@ export const createStudentSchema = z.object({
 
 export const StudentRegistrationSchema = createStudentSchema;
 
+export const studentMasterSchema = createStudentSchema.extend({
+  id: z.string().uuid(),
+  rollNumber: z.string().optional(),
+  status: z.string().optional(),
+  createdAt: z.string().or(z.date()).optional(),
+  updatedAt: z.string().or(z.date()).optional(),
+});
+
 // We can export the inferred type so our apps can use it directly for form data
 export type CreateStudentInput = z.infer<typeof createStudentSchema>;

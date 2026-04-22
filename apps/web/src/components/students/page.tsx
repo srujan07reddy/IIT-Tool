@@ -3,9 +3,9 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
 import { User, BookOpen, FileText } from 'lucide-react';
-import { AppLayout } from '../../../components/layout/app-layout';
-import { DocumentUpload } from '../../../components/students/document-upload';
-import { apiClient } from '../../../services/api-client';
+import { AppLayout } from '../layout/app-layout';
+import { DocumentUpload } from './document-upload';
+import { apiClient } from '../../services/api-client';
 
 type TabType = 'personal' | 'academic' | 'documents';
 

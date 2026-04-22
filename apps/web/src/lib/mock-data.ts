@@ -12,7 +12,7 @@ import {
   User,
   UserRole,
 } from '@coaching-ops/types';
-import { Gender, StudentStatus } from '@coaching-ops/types';
+import { Gender, StudentStatus, DocumentType, VerificationStatus } from '@coaching-ops/types';
 
 const now = new Date().toISOString();
 
@@ -141,9 +141,9 @@ export const demoDocuments: Record<string, Document[]> = {
       createdAt: now,
       updatedAt: now,
       studentId: 'student-1',
-      documentType: 'ID_PROOF',
+      documentType: DocumentType.ID_PROOF,
       fileUrl: '/docs/ishita-aadhar.pdf',
-      isVerified: true,
+      verificationStatus: VerificationStatus.VERIFIED,
       verifiedBy: 'Rohan Kapoor',
     },
     {
@@ -151,9 +151,9 @@ export const demoDocuments: Record<string, Document[]> = {
       createdAt: now,
       updatedAt: now,
       studentId: 'student-1',
-      documentType: 'PHOTO',
+      documentType: DocumentType.PHOTO,
       fileUrl: '/docs/ishita-photo.jpg',
-      isVerified: false,
+      verificationStatus: VerificationStatus.PENDING,
     },
   ],
   'student-2': [
@@ -162,9 +162,9 @@ export const demoDocuments: Record<string, Document[]> = {
       createdAt: now,
       updatedAt: now,
       studentId: 'student-2',
-      documentType: 'PREVIOUS_MARKSHEET',
+      documentType: DocumentType.PREVIOUS_MARKSHEET,
       fileUrl: '/docs/vivaan-marksheet.pdf',
-      isVerified: true,
+      verificationStatus: VerificationStatus.VERIFIED,
       verifiedBy: 'Rohan Kapoor',
     },
   ],

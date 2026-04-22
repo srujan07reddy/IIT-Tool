@@ -25,9 +25,11 @@ export function AppSidebar() {
       baseLinks.push({ href: '/dashboard/users', label: 'User Management', icon: Users });
       baseLinks.push({ href: '/dashboard/settings', label: 'System Settings', icon: Settings });
       baseLinks.push({ href: '/students', label: 'Student Directory', icon: Users });
+      baseLinks.push({ href: '/syllabus', label: 'Syllabus Tracker', icon: BookOpen });
     }
     if (role === 'STAFF') {
       baseLinks.push({ href: '/students', label: 'Student Directory', icon: Users });
+      baseLinks.push({ href: '/syllabus', label: 'Syllabus Tracker', icon: BookOpen });
     }
     if (role === 'STUDENT') {
       baseLinks.push({ href: '/student/syllabus', label: 'My Syllabus', icon: BookOpen });

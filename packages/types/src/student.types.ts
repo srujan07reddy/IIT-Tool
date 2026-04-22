@@ -8,12 +8,35 @@ export interface ParentInfo {
   email?: string;
 }
 
+export enum DocumentType {
+  ID_PROOF = 'ID_PROOF',
+  PREVIOUS_MARKSHEET = 'PREVIOUS_MARKSHEET',
+  PHOTO = 'PHOTO',
+  ADDRESS_PROOF = 'ADDRESS_PROOF',
+  OTHER = 'OTHER',
+}
+
+export enum VerificationStatus {
+  PENDING = 'PENDING',
+  VERIFIED = 'VERIFIED',
+  REJECTED = 'REJECTED',
+}
+
+export enum StudentCategory {
+  GENERAL = 'GENERAL',
+  OBC = 'OBC',
+  SC = 'SC',
+  ST = 'ST',
+  EWS = 'EWS',
+}
+
 export interface Document extends BaseEntity {
   studentId: string;
-  documentType: 'ID_PROOF' | 'PREVIOUS_MARKSHEET' | 'PHOTO' | 'ADDRESS_PROOF';
+  documentType: DocumentType;
   fileUrl: string;
-  isVerified: boolean;
+  verificationStatus: VerificationStatus;
   verifiedBy?: string;
+  remarks?: string;
 }
 
 export interface AcademicProfile {

@@ -3,11 +3,11 @@ import { Heading, Stack, Text } from '@coaching-ops/ui';
 import { AiConceptCard } from '@/components/syllabus/ai-concept-card';
 import { TopicStatusTable } from '@/components/syllabus/topic-status-table';
 import { getTeachingConceptCard } from '@/services/context-cards.service';
-import { getSyllabusHierarchy } from '@/services/syllabus.service';
+import { getFullSyllabusTree } from '@/services/syllabus.service';
 
 export default async function SyllabusPage() {
   const [tree, conceptCard] = await Promise.all([
-    getSyllabusHierarchy(),
+    getFullSyllabusTree(),
     getTeachingConceptCard('Newton Laws'),
   ]);
 

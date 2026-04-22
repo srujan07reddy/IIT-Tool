@@ -2,13 +2,14 @@
 
 import { useMemo, useState } from 'react';
 import type { Document } from '@coaching-ops/types';
+import { DocumentType, VerificationStatus } from '@coaching-ops/types';
 import { Badge, Button, Card, CardContent, CardHeader, CardTitle, Input, Select, Text } from '@coaching-ops/ui';
 
-const documentTypes: Document['documentType'][] = [
-  'ID_PROOF',
-  'PREVIOUS_MARKSHEET',
-  'PHOTO',
-  'ADDRESS_PROOF',
+const documentTypes: DocumentType[] = [
+  DocumentType.ID_PROOF,
+  DocumentType.PREVIOUS_MARKSHEET,
+  DocumentType.PHOTO,
+  DocumentType.ADDRESS_PROOF,
 ];
 
 export function StudentDocumentsUpload({
@@ -17,10 +18,10 @@ export function StudentDocumentsUpload({
   initialDocuments: Document[];
 }) {
   const [documents, setDocuments] = useState<Document[]>(initialDocuments);
-  const [documentType, setDocumentType] = useState<Document['documentType']>('ID_PROOF');
+  const [documentType, setDocumentType] = useState<DocumentType>(DocumentType.ID_PROOF);
   const [fileName, setFileName] = useState('');
 
-  const previewCount = useMemo(() => documents.filter((item) => item.isVerified).length, [documents]);
+  const previewCount = useMemo(() => documents.filter((item) => item.verificationStatus === VerificationStatus.VERIFIED).length, [documents]);
 
   return (
     <Card>
@@ -54,7 +55,7 @@ export function StudentDocumentsUpload({
                   studentId: initialDocuments[0]?.studentId ?? 'student-preview',
                   documentType,
                   fileUrl: `/uploads/${fileName.trim()}`,
-                  isVerified: false,
+                  verificationStatus: VerificationStatus.PENDING,
                 },
                 ...current,
               ]);
@@ -87,8 +88,8 @@ export function StudentDocumentsUpload({
                 <div style={{ fontWeight: 700 }}>{document.documentType.replaceAll('_', ' ')}</div>
                 <Text>{document.fileUrl}</Text>
               </div>
-              <Badge tone={document.isVerified ? 'success' : 'warning'}>
-                {document.isVerified ? 'Verified' : 'Pending'}
+              <Badge tone={document.verificationStatus === VerificationStatus.VERIFIED ? 'success' : 'warning'}>
+                {document.verificationStatus === VerificationStatus.VERIFIED ? 'Verified' : 'Pending'}
               </Badge>
             </div>
           ))}

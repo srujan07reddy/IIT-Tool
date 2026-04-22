@@ -3,6 +3,9 @@ import { AuthService } from './auth.service';
 import { JwtService } from '@nestjs/jwt';
 import { UnauthorizedException } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
+import authConfig from '../../config/auth.config';
+
+jest.mock('bcrypt');
 
 describe('AuthService (Unit Test)', () => {
   let service: AuthService;
@@ -15,6 +18,7 @@ describe('AuthService (Unit Test)', () => {
       providers: [
         AuthService,
         { provide: JwtService, useValue: mockJwtService },
+        { provide: authConfig.KEY, useValue: { saltRounds: 10 } },
       ],
     }).compile();
 
@@ -30,7 +34,7 @@ describe('AuthService (Unit Test)', () => {
     const loginDto = { password: 'wrongPassword' };
 
     // Force bcrypt to return false (mismatch)
-    jest.spyOn(bcrypt, 'compare').mockImplementation(async () => false);
+    (bcrypt.compare as jest.Mock).mockResolvedValue(false);
 
     await expect(service.validateUser(loginDto as any, user as any))
       .rejects.toThrow(UnauthorizedException);
